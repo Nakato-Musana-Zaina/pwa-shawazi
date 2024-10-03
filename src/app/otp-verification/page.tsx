@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef} from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { getCookie } from 'cookies-next';
 
 const OtpVerification = () => {
@@ -10,14 +10,15 @@ const OtpVerification = () => {
     const [loading, setLoading] = useState(false);
     const [userRole, setUserRole] = useState<string | null>(null);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const searchParams = useSearchParams();
     const router = useRouter();
 
     useEffect(() => {
-        const role = getCookie('user_role') as string;
+        const role = getCookie('user_role') as string | null;
         console.log("User role from cookie:", role);
-        setUserRole(role);
-    }, [searchParams]);
+        if (role) {
+            setUserRole(role);
+        }
+    }, []);
 
     const handleOtpChange = (index: number, value: string) => {
         const newOtp = [...otp];
@@ -51,7 +52,6 @@ const OtpVerification = () => {
 
                 console.log("Redirecting to:", redirectUrl); 
                 router.push(redirectUrl);
-                
             } else {
                 setError('Invalid OTP. Please try again.');
             }
@@ -67,7 +67,7 @@ const OtpVerification = () => {
         console.log("Verifying OTP:", otpString); 
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(true); 
+                resolve(true);
             }, 1000);
         });
     };

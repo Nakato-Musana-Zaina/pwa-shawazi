@@ -1,25 +1,71 @@
-"use client";
-import { formatDate } from "@/app/utils/formatDate";
-import Link from "next/link";
-import SideBarPwa from "@/app/components/SideBarPwa";
-import ProgressBar from "@/app/components/Progressbar";
-import useTransactions from "@/app/hooks/useTransactions";
+import { FC, useEffect, useState } from 'react';
+import Link from 'next/link';
+import SideBar from '@/app/(buyer)/buyer/components/SideBarPwa';
+import { Search } from 'lucide-react';
 
-const TransactionsDisplay = () => {
-  const { transactions, isLoading, error } = useTransactions();
+interface Transaction {
+  date: string;
+  status: string;
+  amount: string;
+}
+
+const Dashboard: FC = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch('/api/transactions');
+        if (!response.ok) {
+          throw new Error('Failed to fetch transactions');
+        }
+        const data = await response.json();
+        setTransactions(data.slice(0, 5)); // Get only the first 5 transactions
+      } catch (err) {
+        setError('Failed to load transactions. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-white">
-      <SideBarPwa userRole={""} />
-      <div className="flex-grow p-6  md:mr-4 lg:mr-0">
-        <header className="flex justify-center items-center p-4 w-full max-w-5xl">
-          <h1 className="text-center text-xl md:text-2xl lg:text-4xl font-bold text-primary mt-[-50px]">
-            Transactions
-          </h1>
+    <div className="flex min-h-screen bg-gray-100">
+      <SideBar userRole={''} />
+      <main className="flex-1 p-20">
+        <header className="mb-8 flex justify-between items-center">
+          <h2 className="text-2xl font-semibold lg:text-3xl">Hello John, Welcome to Shawazi</h2>
+          <div className="relative w-1/2">
+            <input
+              type="search"
+              placeholder="Search"
+              className="w-full border border-gray-300 rounded-lg p-2 pl-10"
+            />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          </div>
         </header>
-
-        <ProgressBar />
-
+        <p className="text-lg mb-8">Let&apos;s start, you have no new notifications</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <button className="bg-yellow-500 text-white py-8 px-6 rounded-md shadow-lg hover:bg-yellow-600 transition-colors h-40">
+            Upload land documents
+          </button>
+          <button className="bg-yellow-500 text-white py-8 px-6 rounded-md shadow-lg hover:bg-yellow-600 transition-colors h-40">
+            Go to chats
+          </button>
+          <button className="bg-yellow-500 text-white py-8 px-6 rounded-md shadow-lg hover:bg-yellow-600 transition-colors h-40">
+            Upload receipt of payment
+          </button>
+        </div>
+        
         <div className="w-full max-w-5xl mt-20 mx-auto">
           <div className="flex flex-col md:flex-row justify-between mb-4">
             <Link href="/transactions/history-of-transactions">
@@ -95,9 +141,9 @@ const TransactionsDisplay = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
 
-export default TransactionsDisplay;
+export default Dashboard;

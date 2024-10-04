@@ -26,7 +26,6 @@ const OtpVerification = () => {
       setError("Phone number not found. Please log in again.");
     }
 
-    // Try to get users from cookies
     const cachedUsers = Cookies.get('users');
     if (cachedUsers) {
       setUsers(JSON.parse(cachedUsers));
@@ -39,7 +38,7 @@ const OtpVerification = () => {
     try {
       const fetchedUsers = await fetchUsers();
       setUsers(fetchedUsers);
-      // Store users in cookies for 1 hour
+      
       Cookies.set('users', JSON.stringify(fetchedUsers), { expires: 1/24 });
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -194,14 +193,7 @@ const OtpVerification = () => {
         </form>
       </div>
       <div className="mt-8 w-[90%] md:w-[60%] lg:w-[40%]">
-        <h3 className="text-2xl font-bold mb-4">All Users</h3>
-        <ul className="list-disc pl-5">
-          {users.map((user, index) => (
-            <li key={index} className="mb-2">
-              {user.name} - {user.phone_number} ({user.role})
-            </li>
-          ))}
-        </ul>
+
       </div>
     </div>
   );

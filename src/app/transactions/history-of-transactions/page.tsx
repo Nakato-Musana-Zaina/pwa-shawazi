@@ -6,8 +6,7 @@ import { formatDate } from "@/app/utils/formatDate";
 import useTransactions from "@/app/hooks/useTransactions";
 import { IoArrowBackOutline } from "react-icons/io5";
 import Link from "next/link";
-import SideBarPwa from '@/app/components/SideBarPwa';
-import SideBar from '@/app/components/SideBarPwa';
+import SideBar from '@/app/(buyer)/buyer/components/SideBarPwa';
 
 interface TransactionssProps {
   userRole: 'buyer' | 'seller'; 
@@ -116,7 +115,7 @@ const Transactionss: React.FC<TransactionssProps> = ({ userRole }) => {
           </tbody>
         </table>
       </div>
-      <SideBarPwa userRole={userRole} />
+      <SideBar userRole={userRole} />
     </div>
   );
 };

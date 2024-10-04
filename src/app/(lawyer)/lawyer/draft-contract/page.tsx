@@ -3,7 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import { CheckCircle, Settings, Shield } from 'lucide-react';
 import Image from 'next/image';
-import SideBar from '@/app/components/SideBarPwa';
+import SideBar from '@/app/(buyer)/buyer/components/SideBarPwa';
+
 
 
 const WelcomeSection = () => {
@@ -17,7 +18,7 @@ const WelcomeSection = () => {
         <div className="flex flex-col md:flex-row mb-16 items-center justify-center mt-12 gap-6 md:gap-10 mr-32">
           <div className="w-full md:w-1/2 mb-6 md:mb-0">
             <Image
-              src="/media/low.png"
+              src="/images/low.png"
               alt="Legal scales and gavel"
               width={700}
               height={700}
@@ -40,7 +41,7 @@ const WelcomeSection = () => {
           </div>
         </div>
         <div className="mt-auto flex justify-center mb-12">
-          <Link href="/components/Link-to-join">
+          <Link href="/lawyer/components/Link-to-join">
           <div className="flex justify-center">
   <button className="bg-[#508408] text-white px-10 py-2 rounded-md text-l hover:bg-opacity-90 transition-colors duration-300">
     View agreement

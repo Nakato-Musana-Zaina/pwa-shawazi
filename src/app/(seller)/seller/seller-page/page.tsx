@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import SideBar from '@/app/components/SideBarPwa';
+import SideBar from '@/app/(buyer)/buyer/components/SideBarPwa';
 
 const Dashboard: FC = () => {
   return (

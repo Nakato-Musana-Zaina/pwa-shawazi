@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useEffect } from "react";
-import { useLandData } from "../hooks/useLandData";
+import useLandData from "@/app/hooks/useLandData";
 import LandDetailsModal from "../components/LandDetailModal";
 import SearchErrorModal from "../components/SearchError";
 const LandSearch: React.FC = () => {

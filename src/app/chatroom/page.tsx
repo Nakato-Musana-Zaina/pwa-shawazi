@@ -8,7 +8,8 @@ import { Send, User } from 'lucide-react';
 import { useGetUsers } from '@/app/hooks/useGetUsers';
 import UserCard from '../hooks/userCard/UserCard';
 import useChatMessages from '@/app/hooks/useChatMessages';
-import SideBar from "../components/SideBarPwa";
+import SideBar from '../(buyer)/buyer/components/SideBarPwa';
+
 
 interface UserType {
     id: string;
